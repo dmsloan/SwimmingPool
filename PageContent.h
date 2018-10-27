@@ -16,9 +16,10 @@ table, th, td {\
 }\
 </style>\
 <head>\
-<title>TeleSitter</title>\
+<title>Swimming Pool</title>\
 </head>\
-<body>";
+<body>\
+<h3>Pump motor start/stop</h3>";
 
 char pageContentBody[] =
 "<form id=\"timeForm\">\

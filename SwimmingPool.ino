@@ -1,10 +1,10 @@
 /****************************************************************************
  * This project was derived from the following:
  * TeleSitter.ino
- * TeleSitter main functionality file
  * Mike Hord @ SparkFun Electronics
- * 10 Apr 2018
- * <github repository address>
+ *
+ * Modified by Derek Sloan
+ * November 2018
  * 
  * Establishes the various header includes, global variables, etc that the
  * overall program requires. Implements setup(), loop() and a few other
@@ -13,29 +13,27 @@
  * Resources:
  * ESP32 Arduino support
  * Arduino Time library
- * SparkFun MicroOLED library
- * 
+ *  
  * Development environment specifics:
  * Arduino 1.8.5
- * SparkFun ESP32 Thing
- * SparkFun QWIIC Micro OLED
+ * ESP32
  * 
  * This code is beerware; if you see me (or any other SparkFun employee) at the
  * local, and you've found our code helpful, please buy us a round!
  * ****************************************************************************/
 
 #include <WiFi.h>
-#include "PageContent.h"
-#include "time.h"       //native ESP32 time library
-#include <Preferences.h> // library that stores to ESP32 non-volatile memory
-#include "TimeLib.h"    // Arduino time library
-#include <Wire.h>
-#include "WiFiInfo.h" // stroes the SSID and PASSWORD in seperate file so it will not be uploaded to github
+#include "PageContent.h" //the html that is served to the cliet is in this file
+#include "time.h"        //native ESP32 time library
+#include <Preferences.h> //library that stores to ESP32 non-volatile memory
+#include "TimeLib.h"     //Arduino time library
+//#include <Wire.h>      //This library allows you to communicate with I2C devices
+#include "WiFiInfo.h"    //stroes the SSID and PASSWORD in seperate file so it will not be uploaded to github
 
-const char* ssid     = SSID; //this value is retreved from WiFiInfo.h
-const char* password = PASSWORD; //this value is retreved from WiFiInfo.h
+const char* ssid      = SSID;     //this value is retreved from WiFiInfo.h
+const char* password  = PASSWORD; //this value is retreved from WiFiInfo.h
 
-const char* ntpServer = "pool.ntp.org";
+const char* ntpServer = "pool.ntp.org";  // coincidentally called pool even though it has nothing to do with the SwimmingPool sketch
 
 int mHoursOn = 8;
 int mMinutesOn = 0;
@@ -79,7 +77,7 @@ void setup()
   Serial.begin(115200);
   pinMode(LED_BUILTIN, OUTPUT);  // Also has a blue LED on the ESP32 Thing
 
-  Serial.println("This sketch is called TeleSitter.ino");
+  Serial.println("This sketch is called SwimmingPool.ino");
 
   // We start by connecting to a WiFi network
   Serial.println();
@@ -101,10 +99,10 @@ void setup()
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
 
-  // Initialize the NVM storage handler and fetch the cached
-  //  alarm time information.
-  alarmTimes.begin("TeleSitter", false);
-  getAlarmTimes();
+  // Initialize the Non Volitle Memory storage handler and fetch the cached
+  //  alarm time information. Reigion is called SwimmingPool and the second parameter is always false
+  alarmTimes.begin("SwimmingPool", false);
+  getAlarmTimes();  // defined in NVM.ino
 
   // Enable the server functionality.
   server.begin();
@@ -202,7 +200,7 @@ void loop(){
           {
             // We've split up the repsonse into a few blocks, to make editing a
             //  bit easier.
-            client.print(pageContentHead);
+            client.print(pageContentHead);  //pageContentHead and the like is defined in PageContent.h
             client.printf(pageContentBody, mHoursOn, mMinutesOn, mHoursOff, mMinutesOff,
                                            tHoursOn, tMinutesOn, tHoursOff, tMinutesOff,
                                            wHoursOn, wMinutesOn, wHoursOff, wMinutesOff,

@@ -71,8 +71,8 @@ void storeAlarmTimes()
 
 void getAlarmTimes()
 {
-  mHoursOn = alarmTimes.getInt("mHoursOn", 8);
-  mMinutesOn = alarmTimes.getInt("mMinutesOn", 0);
+  mHoursOn = alarmTimes.getInt("mHoursOn", 8); //get the alarm time, If it does not exist return a default value of 8
+  mMinutesOn = alarmTimes.getInt("mMinutesOn", 0); 
   mHoursOff = alarmTimes.getInt("mHoursOff", 0);
   mMinutesOff = alarmTimes.getInt("mMinutesOff", 0);
   
