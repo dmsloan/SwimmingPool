@@ -35,47 +35,60 @@ const char* password  = PASSWORD; //this value is retreved from WiFiInfo.h
 
 const char* ntpServer = "pool.ntp.org";  // coincidentally called pool even though it has nothing to do with the SwimmingPool sketch
 
-int mHoursOn = 8;
-int mMinutesOn = 0;
-int mHoursOff = 0;
-int mMinutesOff = 0;
-int tHoursOn = 8;
-int tMinutesOn = 0;
-int tHoursOff = 0;
-int tMinutesOff = 0;
-int wHoursOn = 8;
-int wMinutesOn = 0;
-int wHoursOff = 0;
-int wMinutesOff = 0;
-int rHoursOn = 8;
-int rMinutesOn = 0;
-int rHoursOff = 0;
-int rMinutesOff = 0;
-int fHoursOn = 8;
-int fMinutesOn = 0;
-int fHoursOff = 0;
-int fMinutesOff = 0;
-int sHoursOn = 8;
-int sMinutesOn = 0;
-int sHoursOff = 0;
-int sMinutesOff = 0;
-int nHoursOn = 8;
-int nMinutesOn = 0;
-int nHoursOff = 0;
-int nMinutesOff = 0;
+int mHoursOn;
+int mMinutesOn;
+int mHoursOff;
+int mMinutesOff;
 
-//#define CTRL_PIN 5
-#define DC_JUMPER 1   // Default value. If you didn't change the jumper
-                      //  on the PCB, this is what you want.
+int tHoursOn;
+int tMinutesOn;
+int tHoursOff;
+int tMinutesOff;
+
+int wHoursOn;
+int wMinutesOn;
+int wHoursOff;
+int wMinutesOff;
+
+int rHoursOn;
+int rMinutesOn;
+int rHoursOff;
+int rMinutesOff;
+
+int fHoursOn;
+int fMinutesOn;
+int fHoursOff;
+int fMinutesOff;
+
+int sHoursOn;
+int sMinutesOn;
+int sHoursOff;
+int sMinutesOff;
+
+int nHoursOn;
+int nMinutesOn;
+int nHoursOff;
+int nMinutesOff;
+
+#define pumpMotor 16      // pump motor
+#define sweeperMotor 17   // sweeper motor
+#define heater 18         // heater
+#define inletValve 19     //inlet valve
+#define dischargeValve 21 // discharge valve
+
 WiFiServer server(80);
-Preferences alarmTimes; // Oddly, the non-volatile memory library for
-                        //  ESP32 is called "Preferences". ???
+Preferences alarmTimes; // Oddly, the non-volatile memory library for ESP32 is called "Preferences". ???
 
 // Runs once.
 void setup()
 {
   Serial.begin(115200);
   pinMode(LED_BUILTIN, OUTPUT);  // Also has a blue LED on the ESP32 Thing
+  pinMode(pumpMotor, OUTPUT);
+  pinMode(sweeperMotor, OUTPUT);
+  pinMode(heater, OUTPUT);
+  pinMode(inletValve, OUTPUT);
+  pinMode(dischargeValve, OUTPUT);
 
   Serial.println("This sketch is called SwimmingPool.ino");
 
